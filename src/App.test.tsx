@@ -1,17 +1,13 @@
 import React from 'react';
 import { render, screen, renderHook, act } from '@testing-library/react';
 import App from './App';
-import {useLocalStorage} from './useLocalStorage';
-import {useSettingsContext} from "./useSettingsContext";
+import {useLocalStorage} from './hooks/useLocalStorage';
+import {Control} from "./components/Control";
+import {Display} from "./components/Display";
+
 
 beforeEach(() => {
   localStorage.clear();
-});
-
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
 });
 
 it("should correctly set localStorage", () => {
@@ -27,28 +23,16 @@ it("should correctly set localStorage", () => {
   expect((newValue !== null) ? JSON.parse(newValue) : newValue).toEqual("newValue");
 });
 
-it("should correctly set settingsContext", () => {
-  const { result } = renderHook(() => useSettingsContext({
-    volume: 1,
-    currentSong: "Cool Song",
-    analyticsOn: true
-  }));
-  const [settingsContext, setVolume, setCurrentSong, setAnalyticsOn ] = result.current;
-  expect(settingsContext).toEqual({
-    volume: 1,
-    currentSong: "Cool Song",
-    analyticsOn: true
-  });
-  act(() => {
-    setVolume(2);
-  });
-  expect(result.current[0].volume).toEqual(2);
-  act(() => {
-    setCurrentSong("Cool Song 2");
-  });
-  expect(result.current[0].currentSong).toEqual("Cool Song 2");
-  act(() => {
-    setAnalyticsOn(false);
-  });
-  expect(result.current[0].analyticsOn).toBeFalsy();
-});
+test('Should throw error when useSettingsContext used outside of context', () => {
+  expect(() => {
+    render(
+        <Control/>
+    )
+  }).toThrow('Settings has been used outside of Context.');
+
+  expect(() => {
+    render(
+        <Display/>
+    )
+  }).toThrow('Settings has been used outside of Context.');
+})

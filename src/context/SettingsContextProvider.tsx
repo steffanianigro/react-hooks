@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
 import {useLocalStorage} from "../hooks/useLocalStorage";
-import {SettingsContext} from "../context/SettingsContext";
+import {SettingsContext} from "./SettingsContext";
 
 export const SettingsContextProvider = ({ children }: { children?: ReactNode }) => {
 
