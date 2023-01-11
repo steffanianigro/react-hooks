@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, renderHook, act } from '@testing-library/react';
-import App from './App';
+import { render, renderHook, act } from '@testing-library/react';
 import {useLocalStorage} from './hooks/useLocalStorage';
 import {Control} from "./components/Control";
 import {Display} from "./components/Display";
